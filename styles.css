@@ -1,7 +1,10 @@
-/* 
-. for classes 
-# for ids
-*/
+
 #buttons{
-    background-color: aqua;
+  border-style: solid;
+  border-color: black;
+  text-align: center;
+  
+}
+#display{
+  text-align: center;
 }
