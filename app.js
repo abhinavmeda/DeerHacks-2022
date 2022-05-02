@@ -1,28 +1,61 @@
+var video_player_div = document.getElementById('take_photo');
+var video = document.getElementById('video');
+var on_button = document.getElementById('on');
+var off_button = document.getElementById('off');
+var stream;
+const width = 320;
+const height = 320;
 
-let camera_button = document.querySelector("#start-camera");
-let video = document.querySelector("#video");
 
-camera_button.addEventListener('click', async function() {
-	const camera_constraints = { video: true, audio: false };
-   	stream = await navigator.mediaDevices.getUserMedia(camera_constraints);
+var take_picture = document.createElement('button');
+take_picture.innerHTML = 'click';
+
+var canvas = document.createElement('canvas');
+canvas.width = 320;
+canvas.height = 240; 
+
+var photo = document.createElement('img');
+on_button.addEventListener('click', async () =>{
+	stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: true });
 	video.srcObject = stream;
+	video.play();
+	on_button.disabled = true;
+	off_button.disabled = true;
+	video_player_div.appendChild(take_picture);
+})
 
-	const newButton = document.createElement("button");
-	newButton.innerHTML = "click";
-	const canvas = document.createElement("canvas");
-	canvas.height = 240;
-	canvas.width = 320;
-	document.getElementById('display').appendChild(newButton);
-	newButton.addEventListener('click', () => {
-		canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
-		video.remove();
-		newButton.remove();
-		stream.getTracks().forEach(function(track) {
-			track.stop();
-		});
-		document.getElementById('display').appendChild(canvas);
-		var img = canvas.toDataURL("image/png");
-		console.log(img);
-		camera_button.remove();
-	})
-});
+take_picture.addEventListener('click', () =>{
+	var context = canvas.getContext('2d');
+	context.drawImage(video, 0, 0, width, height);
+	var data = canvas.toDataURL('image/png');
+    photo.setAttribute('src', data);
+	take_picture.remove();
+	stream.getVideoTracks()[0].stop();
+	video.remove();
+	on_button.remove();
+	off_button.remove();
+	document.getElementById('video_player').appendChild(canvas);
+	var rect = canvas.getBoundingClientRect();
+	// console.log(rect.top, rect.right, rect.bottom, rect.left);
+	var image_data = context.getImageData(rect.left, rect.top, width, height).data;
+	console.log(image_data);
+	// for(let i = 0; i < width; i++){
+	// 	for(let j = 0; j < height; j++){
+	// 		const pixel_index = (i * j * width) * 4;
+	// 		const r = image_data[pixel_index + 0];
+	// 		const g = image_data[pixel_index + 1];
+	// 		const b = image_data[pixel_index + 2];
+	// 		const a = image_data[pixel_index + 3];
+	// 		console.log(r, g, b, a);
+	// 	}
+	// }
+	console.log(image_data);	
+	// context.putImageData(image_data, 320, 240);
+
+})
+
+off_button.addEventListener('click', () => {
+
+	stream.getVideoTracks()[0].stop();
+
+})
