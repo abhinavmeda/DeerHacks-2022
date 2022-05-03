@@ -4,10 +4,11 @@ let width = 300;
 let height = 300;
 
 let file = document.getElementById("image");
-let canvas = document.createElement("canvas");
-canvas.width = width;
-canvas.height = height;
+let canvas = document.getElementById("canvas");
+// canvas.width = width;
+// canvas.height = height;
 let ctx  = canvas.getContext("2d");
+ctx.fill();
 let data;
 
 // custom event to trigger when canvas is filled with image
@@ -17,10 +18,10 @@ canvas.addEventListener('filled', function (e) {
 }, false);
 
 file.addEventListener("change", handleFiles, false);
-
 function handleFiles() {
   const fileList = this.files;
   const uploaded_file = fileList[0];
+  document.getElementById("text").innerHTML = uploaded_file.name;
   const reader = new FileReader();
   
   reader.readAsDataURL(uploaded_file);
@@ -36,7 +37,7 @@ function handleFiles() {
 		data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
 		canvas.dispatchEvent(event);
 	};
-	document.body.appendChild(canvas);
+	document.getElementById("display").appendChild(canvas);
   };
 }	
 
