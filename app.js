@@ -8,14 +8,17 @@ let canvas = document.createElement("canvas");
 canvas.width = width;
 canvas.height = height;
 let ctx  = canvas.getContext("2d");
-
 let data;
 
-console.log(data);
+// custom event to trigger when canvas is filled with image
+const event = new Event('filled');
+canvas.addEventListener('filled', function (e) { 
+	console.log(data);
+}, false);
+
 file.addEventListener("change", handleFiles, false);
 
 function handleFiles() {
-console.log(data);
   const fileList = this.files;
   const uploaded_file = fileList[0];
   const reader = new FileReader();
@@ -31,15 +34,10 @@ console.log(data);
 	img.onload = function() {
 		ctx .drawImage(img, 0, 0, canvas.width, canvas.height);
 		data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-		console.log(data);
-
+		canvas.dispatchEvent(event);
 	};
-	console.log(data);
 	document.body.appendChild(canvas);
-	console.log(data);
-
   };
-  console.log(data);
 }	
-console.log(data);
+
 
