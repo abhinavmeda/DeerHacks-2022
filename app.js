@@ -1,61 +1,45 @@
-var video_player_div = document.getElementById('take_photo');
-var video = document.getElementById('video');
-var on_button = document.getElementById('on');
-var off_button = document.getElementById('off');
-var stream;
-const width = 320;
-const height = 320;
+// https://usefulangle.com/post/352/javascript-capture-image-from-camera
 
+let width = 300;
+let height = 300;
 
-var take_picture = document.createElement('button');
-take_picture.innerHTML = 'click';
+let file = document.getElementById("image");
+let canvas = document.createElement("canvas");
+canvas.width = width;
+canvas.height = height;
+let ctx  = canvas.getContext("2d");
 
-var canvas = document.createElement('canvas');
-canvas.width = 320;
-canvas.height = 240; 
+let data;
 
-var photo = document.createElement('img');
-on_button.addEventListener('click', async () =>{
-	stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: true });
-	video.srcObject = stream;
-	video.play();
-	on_button.disabled = true;
-	off_button.disabled = true;
-	video_player_div.appendChild(take_picture);
-})
+console.log(data);
+file.addEventListener("change", handleFiles, false);
 
-take_picture.addEventListener('click', () =>{
-	var context = canvas.getContext('2d');
-	context.drawImage(video, 0, 0, width, height);
-	var data = canvas.toDataURL('image/png');
-    photo.setAttribute('src', data);
-	take_picture.remove();
-	stream.getVideoTracks()[0].stop();
-	video.remove();
-	on_button.remove();
-	off_button.remove();
-	document.getElementById('video_player').appendChild(canvas);
-	var rect = canvas.getBoundingClientRect();
-	// console.log(rect.top, rect.right, rect.bottom, rect.left);
-	var image_data = context.getImageData(rect.left, rect.top, width, height).data;
-	console.log(image_data);
-	// for(let i = 0; i < width; i++){
-	// 	for(let j = 0; j < height; j++){
-	// 		const pixel_index = (i * j * width) * 4;
-	// 		const r = image_data[pixel_index + 0];
-	// 		const g = image_data[pixel_index + 1];
-	// 		const b = image_data[pixel_index + 2];
-	// 		const a = image_data[pixel_index + 3];
-	// 		console.log(r, g, b, a);
-	// 	}
-	// }
-	console.log(image_data);	
-	// context.putImageData(image_data, 320, 240);
+function handleFiles() {
+console.log(data);
+  const fileList = this.files;
+  const uploaded_file = fileList[0];
+  const reader = new FileReader();
+  
+  reader.readAsDataURL(uploaded_file);
+  reader.onload = function(){
 
-})
+	let dataURL = reader.result;
+	let img = document.createElement("img");
+	img.src = dataURL;
+	img.width = width;
+	img.height = height;
+	img.onload = function() {
+		ctx .drawImage(img, 0, 0, canvas.width, canvas.height);
+		data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+		console.log(data);
 
-off_button.addEventListener('click', () => {
+	};
+	console.log(data);
+	document.body.appendChild(canvas);
+	console.log(data);
 
-	stream.getVideoTracks()[0].stop();
+  };
+  console.log(data);
+}	
+console.log(data);
 
-})

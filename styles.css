@@ -6,3 +6,7 @@ video{
 div{
   text-align: center;
 }
+canvas{
+  border-style: solid;
+  border-color: black;
+}
