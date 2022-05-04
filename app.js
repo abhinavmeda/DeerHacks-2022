@@ -1,10 +1,12 @@
 // https://usefulangle.com/post/352/javascript-capture-image-from-camera
 
-let width = 300;
-let height = 300;
+let width = 500;
+let height = 500;
 
 let file = document.getElementById("image");
 let canvas = document.getElementById("canvas");
+canvas.width = width;
+canvas.height = width;
 let button_div = document.getElementById("buttons");
 let ctx  = canvas.getContext("2d");
 let data;
