@@ -14,10 +14,10 @@ let original_image_data;
 const event = new Event('filled');
 canvas.addEventListener('filled', function (e) { 
 	console.log(data);
-	button_div.appendChild(greyscale_button);
 	button_div.appendChild(original_button);
 	button_div.appendChild(pixelate_button);
 	button_div.appendChild(invert_button);
+	button_div.appendChild(greyscale_button);
 }, false);
 
 

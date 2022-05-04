@@ -6,10 +6,10 @@ video{
 div{
   text-align: center;
 }
-/* canvas{
+canvas{
   border-style: solid;
   border-color: black;
-} */
+}
 label{
   cursor: pointer;
 }
