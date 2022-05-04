@@ -61,7 +61,8 @@ invert_button.addEventListener("click", () => {
 
 pixelate_button.addEventListener("click", () =>{
     let array = []
-    let factor = Number(prompt("Enter a factor", "10"));
+    let factor = Number(prompt("Enter a factor"));
+    if(factor === null){factor = 10;}
     for(let i = 0; i < height; i+=factor){
         for(let j = 0; j < width; j+=factor){
             let pixelIndex = (i + j * width) * 4;
