@@ -61,7 +61,7 @@ invert_button.addEventListener("click", () => {
 
 pixelate_button.addEventListener("click", () =>{
     let array = []
-    let factor = Number(prompt("Enter a factor"));
+    let factor = Number(prompt("Enter a factor", "10"));
     for(let i = 0; i < height; i+=factor){
         for(let j = 0; j < width; j+=factor){
             let pixelIndex = (i + j * width) * 4;
@@ -72,7 +72,7 @@ pixelate_button.addEventListener("click", () =>{
             array.push(store);
         }
     }
-        console.log(array);
+        // console.log(array);
     for (let c = 0; c < array.length; c++){
         let x = array[c].x;
         let y = array[c].y;
@@ -89,6 +89,6 @@ pixelate_button.addEventListener("click", () =>{
     
     var image_data = ctx.createImageData(width, height);
     image_data.data.set(data);
-    console.log(data);
+    // console.log(data);
     ctx.putImageData(image_data, 0, 0);
 });
