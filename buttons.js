@@ -60,59 +60,30 @@ invert_button.addEventListener("click", () => {
 });
 
 pixelate_button.addEventListener("click", () =>{
-
-
-    let a = 0;
-    let c = 0;
-    let original_rgb = (a + c * width) * 4;
-    let r = data[original_rgb + 0];
-    let g = data[original_rgb + 1]
-    let b = data[original_rgb + 1]
-    for(let i = 0; i < 20; i++){
-        for (let j = 0; j < 20; j++){
+    let array = []
+    let factor = Number(prompt("Enter a factor"));
+    for(let i = 0; i < height; i+=factor){
+        for(let j = 0; j < width; j+=factor){
             let pixelIndex = (i + j * width) * 4;
-            data[pixelIndex + 0] = r;
-            data[pixelIndex + 1] = g;
-            data[pixelIndex + 2] = b;
+            let r = data[pixelIndex + 0];
+            let g = data[pixelIndex + 1];
+            let b = data[pixelIndex + 2];
+            let store = {x: i, y: j, rgb:[r, g, b]}
+            array.push(store);
         }
     }
-    // a == i
-    // c == j
-    original_rgb = (a + c + 20 * width) * 4;
-    r = data[original_rgb + 0];
-    g = data[original_rgb + 1]
-    b = data[original_rgb + 1]
-    for(let i = 0; i < 20; i++){
-        for (let j = 0; j < 20 + 20; j++){
-            let pixelIndex = (i + j * width) * 4;
-            data[pixelIndex + 0] = r;
-            data[pixelIndex + 1] = g;
-            data[pixelIndex + 2] = b;
-        }
-    }
-    original_rgb = (a + 20 + c  * width) * 4;
-    r = data[original_rgb + 0];
-    g = data[original_rgb + 1]
-    b = data[original_rgb + 1]
-    for(let i = 0; i < 20 + 20; i++){
-        for (let j = 0; j < 20; j++){
-            let pixelIndex = (i + j * width) * 4;
-            data[pixelIndex + 0] = r;
-            data[pixelIndex + 1] = g;
-            data[pixelIndex + 2] = b;
-        }
-    }
-
-    original_rgb = (a + 20 + c + 20  * width) * 4;
-    r = data[original_rgb + 0];
-    g = data[original_rgb + 1]
-    b = data[original_rgb + 1]
-    for(let i = 0; i < 20 + 20; i++){
-        for (let j = 0; j < 20 + 20; j++){
-            let pixelIndex = (i + j * width) * 4;
-            data[pixelIndex + 0] = r;
-            data[pixelIndex + 1] = g;
-            data[pixelIndex + 2] = b;
+        console.log(array);
+    for (let c = 0; c < array.length; c++){
+        let x = array[c].x;
+        let y = array[c].y;
+        let rgb = array[c].rgb;
+        for(let m = 0; m < factor; m++){
+            for(let n = 0; n < factor; n++){
+                let thingy = ((x + m) + ((y + n) * width)) * 4;
+                data[thingy + 0] = rgb[0];
+                data[thingy + 1] = rgb[1];
+                data[thingy + 1] = rgb[1];
+            }
         }
     }
     
@@ -120,6 +91,4 @@ pixelate_button.addEventListener("click", () =>{
     image_data.data.set(data);
     console.log(data);
     ctx.putImageData(image_data, 0, 0);
-    
-    
 });
