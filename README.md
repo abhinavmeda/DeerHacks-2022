@@ -1,1 +1,1 @@
-# photo filter app
+# image filter app
